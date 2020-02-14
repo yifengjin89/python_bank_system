@@ -28,11 +28,13 @@ class Atm(object):
 
     def open_account(self):
         # press (1)
+        print("Open account")
         name = str(input("Please Enter Your Name: "))
         user_id_number = int(input("Please Enter Your ID Number, digit only: "))
         phone = int(input("Please Enter Your Phone Number, digit only: "))
         password = int(input("Please setting Your PassWord, digit only: "))
-        self.check_password(password)
+        if not self.check_password(password):
+            return -1
         card_id = self.create_card()
         print("Your Card ID is: %s " % card_id)
         card_balance = 0
@@ -47,13 +49,15 @@ class Atm(object):
         for i in range(3):
             re_password = int(input("Please Re-Enter Your PassWord, digit only: "))
             if real_password == re_password:
-                return
+                return True
             else:
                 remain = 2 - i
                 if remain < 1:
                     break
                 print("PassWord does not match!!! and You have %s" % remain + " chance")
         print("Your PassWord does not match!!!, operation failed !!!")
+        return False
+
 
     def create_card(self):
         while True:
@@ -64,7 +68,9 @@ class Atm(object):
             if not self.all_users.get(str):
                 return str
 
+
     def balance_info(self):
+        print("Balance info")
         card_id = input("Please Enter Card ID: ")
         user = self.all_users.get(card_id)
         if not user:
@@ -75,7 +81,21 @@ class Atm(object):
             print("Card Id: %s   Balance: %s" % (user.card.card_id, user.card.card_balance))
 
     def deposit(self):
-        pass
+        # press (3)
+        print("Deposit")
+        card_id = input("Please Enter Card ID: ")
+        user = self.all_users.get(card_id)
+        if not user:
+            print("Card Id does not exist!!")
+        else:
+            password = int(input("Please Enter Your PassWord, digit only: "))
+            self.check_password(user.card.card_password)
+            Deposit = int(input("Enter The Amount You want to Deposit: "))
+            if Deposit <= 0:
+                print("You Deposit must be great than 0, Transaction cancelled ！")
+                return -1
+            user.card.card_balance += Deposit
+
 
     def withdraw(self):
         pass

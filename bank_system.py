@@ -36,7 +36,7 @@ while True:
         ATM.balance_info()
 
     elif operation == "3":
-        ATM.open_account()
+        ATM.deposit()
 
     elif operation == "4":
         ATM.open_account()
