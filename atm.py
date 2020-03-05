@@ -95,6 +95,7 @@ class Atm(object):
                 print("You Deposit must be great than 0, Transaction cancelled ！")
                 return -1
             user.card.card_balance += Deposit
+            print("Deposit successful!")
 
 
     def withdraw(self):
